@@ -1,0 +1,133 @@
+/* @font-face {
+    font-family: "Turbogothic";
+    src: url("./OfenbacherSchwabCAT.ttf");
+}  */
+
+html, body, #root{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    background: rgb(0, 0, 0);
+}
+
+/* #root{
+    font-family: "Turbogothic"
+} */
+
+#covers{
+    float: left;
+    display: block;
+    height: calc(100% - 120px);
+    width: 15%;
+    overflow: auto;
+}
+
+.arrow{
+    width: 0;
+	height: 0;
+	border-top: 14px solid transparent;
+	border-left: 28px solid white;
+    border-bottom: 14px solid transparent;
+    position: absolute;
+    left: 28%;
+    top: 32%;
+}
+
+#controls{
+    position: absolute;
+    left:18vw;
+    top: 10px;
+}
+
+.buttons{
+    position: absolute;
+}
+
+#play{
+    top:5px;
+    left: 125px;
+}
+
+#next{
+    left:240px;
+}
+
+#time{
+    position: absolute;
+    left: 400px;
+}
+
+.cover{
+    display: block;
+    width: 100%;
+}
+
+table{
+    width:100%; 
+    /* padding: 10px; */
+    /* height: 100%; */
+    /* height: 100%;
+    margin:0 auto; */
+}
+
+tr{
+    width: 100%;
+    /* margin-top:1%; */
+    color: white;
+    /* box-sizing: border-box; */
+    /* background: rgb(131, 0, 0); */
+    /* border: 5px solid rgb(63, 0, 0);
+    border-radius:20px; */
+    text-align: center;
+    padding: 10px;
+    
+}
+
+td{
+    padding: 25px 0px;
+    box-sizing: border-box;
+    font-size:21px;
+    border: 2px solid rgb(63, 0, 0);
+}
+#title{
+    width: 100%;
+    font-size: 50px;
+    padding:25px 0;
+    color:white;
+    background: rgb(129, 0, 0);
+    text-align: center;
+    margin:0;
+    letter-spacing: 5px;
+    position: sticky;
+
+}
+tr:nth-child(odd){
+    background: rgb(101, 0, 0);
+}
+
+tr:nth-child(even){
+    background: rgb(141, 0, 0);
+}
+
+tr:hover > td{
+    background: rgb(71, 0, 0);
+    /* border: none;    */
+}
+
+#content{
+    width:85%;
+    height: calc(100% - 120px);
+    float: left;
+    overflow: auto;
+}
+
+#footer{
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 5px solid rgb(85, 0, 0);
+    height: 120px;
+    margin-bottom: 0px;
+    background: rgb(129, 0, 0);
+    clear: both;
+}
