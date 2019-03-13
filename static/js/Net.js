@@ -24,12 +24,35 @@ class Net {
                 var finish = JSON.parse(data)
                 document.getElementById("songs").innerHTML = ""
                 for (var i = 0; i < finish.songs.length; i++)
-                    ui.createSong(albumPhoto, finish.songs[i], finish.size[i])
+                    ui.createSong(albumPhoto, finish.songs[i], finish.size[i], i, finish.songs.length)
                 console.log("New songs table created")
             },
             error: function (xhr, status, error) {
                 console.log(xhr);
             },
+        });
+    }
+
+    sendSong(albumName, currSong, flag) {
+        $.ajax({
+            type: "POST",
+            url: "adres serwera",
+            data: { action: "NEXT", album: albumName },
+            success: function (response) {
+                var finish = JSON.parse(response)
+
+                var titles = finish.songs
+                var sizes = finish.size
+                while (titles[0] != currSong) {
+                    var title = titles.shift()
+                    var size = sizes.shift()
+                    titles.push(title)
+                    sizes.push(size)
+                }
+                if (titles.length == 1) music.playMusic(albumName, titles[0], sizes[0], document.getElementById("play"), 2)
+                else if (flag == "next") music.playMusic(albumName, titles[1], sizes[1], document.getElementById("play"))
+                else if (flag == "prev") music.playMusic(albumName, titles[titles.length - 1], sizes[sizes.length - 1], document.getElementById("play"))
+            }
         });
     }
 }
