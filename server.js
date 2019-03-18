@@ -2,6 +2,12 @@ var qs = require("querystring")
 var http = require("http")
 var fs = require("fs")
 
+var playlist = {
+    "albums": [],
+    "songs": [],
+    "sizes": []
+}
+
 const servResponse = (req, res) => {
 
     var allData = "";
@@ -60,7 +66,7 @@ const servResponse = (req, res) => {
                 });
             })
         }
-        else if (finish.action = "NEXT") {
+        else if (finish.action == "NEXT") {
             fs.readdir(__dirname + "/static/media/audio/", (err, files) => {
                 if (err) {
                     return console.log(err);
@@ -94,6 +100,14 @@ const servResponse = (req, res) => {
                 });
             })
         }
+        else if(finish.action == "ADD"){
+            playlist.albums.push(finish.album)
+            playlist.songs.push(finish.title)
+            playlist.sizes.push(finish.size)
+            console.log(playlist);
+            
+            res.end(JSON.stringify(playlist, null, 4))
+        }
     })
 
 }
@@ -118,6 +132,19 @@ var server = http.createServer((req, res) => {
                 })
             else if (req.url == "/css/style.css")
                 fs.readFile("static/css/style.css", (error, data) => {
+                    if (error) {
+                        res.writeHead(404, { 'Content-Type': 'text/html;charset=utf-8' });
+                        res.write("<h1>błąd 404 - nie ma pliku!<h1>");
+                        res.end();
+                    }
+                    else {
+                        res.writeHead(200, { 'Content-Type': 'text/css;charset=utf-8' });
+                        res.write(data);
+                        res.end();
+                    }
+                })
+            else if (req.url == "/css/progBar.css")
+                fs.readFile("static/css/progBar.css", (error, data) => {
                     if (error) {
                         res.writeHead(404, { 'Content-Type': 'text/html;charset=utf-8' });
                         res.write("<h1>błąd 404 - nie ma pliku!<h1>");

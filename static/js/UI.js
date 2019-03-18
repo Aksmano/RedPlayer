@@ -3,9 +3,13 @@ console.log("wczytano plik Ui.js")
 class UI {
 
     constructor() {
-        this.songList
-        this.album
-        this.size
+        // this.songList
+        // this.album
+        // this.size
+        this.init()
+    }
+
+    init() {
         document.getElementById("prev").onclick = (e) => { this.prevSong() }
         document.getElementById("prev").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("prev").onmouseout = (e) => { document.body.style.cursor = "default" }
@@ -32,46 +36,49 @@ class UI {
     }
 
     createSong(album, title, size, i, endSize) {
-        // this.album = album
-        // if (i == 0) {
-        //     this.songList = []
-        //     this.size
-        //     this.songList.push(title)
-        // }
-        // else {
-        //     this.songList.push(title)
-        // }
         var songName = ""
         for (let i = 0; i < title.length; i++)
             if (title[i] == "." && title[i + 1] == "m" && title[i + 2] == "p" && title[i + 3] == "3") break
             else songName += title[i]
         var tr = document.createElement("tr")
-        tr.onclick = (e) => {
-            music.playMusic(album, title, size, document.getElementById("play"))
-        }
         tr.onmouseover = () => { document.body.style.cursor = "pointer" }
         tr.onmouseout = () => { document.body.style.cursor = "default" }
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
         td.innerText = album
         tr.appendChild(td)
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
         td.innerText = songName
         tr.appendChild(td)
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
         td.innerText = (size / 1000 / 1000).toFixed(2) + " MB"
         tr.appendChild(td)
-        // var td = document.createElement("td")
-        // var arrow = document.createElement("div")
-        // arrow.className = "arrow"
-        // td.appendChild(arrow)
+        var td = document.createElement("td")
+        td.style.background = "rgb(93, 0, 0)"
+        var img = document.createElement("img")
+        img.src = "../img/playlist.png"
+        img.width = 32
+        img.height = 32
+        img.style.paddingRight = "32px"
+        img.style.paddingLeft = "32px"
+        td.appendChild(img)
         // td.style.position = "relative"
-        // td.width = 64
-        // td.onmouseover = () => { td.children[0].style.borderLeftColor = "rgb(233, 0, 0)" }
-        // td.onmouseout = () => { td.children[0].style.borderLeftColor = "rgb(255, 255, 255)" }
-        // tr.appendChild(td)
+        td.width = 64
+        td.onmouseover = () => { td.style.backgroundColor = "rgb(123, 0, 0)" }
+        td.onmouseout = () => { td.style.backgroundColor = "rgb(93, 0, 0)" }
+        td.onclick = () => {
+            ui.addToPlaylist(album, title, size)
+        }
+        tr.appendChild(td)
         document.getElementById("songs").appendChild(tr)
         console.log("Song created");
 
+    }
+
+    addToPlaylist(album, title, size) {
+        music.toPlaylist(album, title, size)
     }
 
     prevSong() {

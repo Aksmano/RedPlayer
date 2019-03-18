@@ -15,7 +15,7 @@ class Net {
 
     sendData(albumPhoto) {
         $.ajax({
-            url: "adres serwera",
+            url: "adres_serwera",
             data: { action: "NEXT", album: albumPhoto },
             type: "POST",
             success: function (data) {
@@ -36,7 +36,7 @@ class Net {
     sendSong(albumName, currSong, flag) {
         $.ajax({
             type: "POST",
-            url: "adres serwera",
+            url: "adres_serwera",
             data: { action: "NEXT", album: albumName },
             success: function (response) {
                 var finish = JSON.parse(response)
@@ -49,9 +49,28 @@ class Net {
                     titles.push(title)
                     sizes.push(size)
                 }
+
                 if (titles.length == 1) music.playMusic(albumName, titles[0], sizes[0], document.getElementById("play"), 2)
                 else if (flag == "next") music.playMusic(albumName, titles[1], sizes[1], document.getElementById("play"))
                 else if (flag == "prev") music.playMusic(albumName, titles[titles.length - 1], sizes[sizes.length - 1], document.getElementById("play"))
+            },
+            error: function (err) {
+                console.log(err);
+
+            }
+        });
+    }
+
+    sendSongToPlaylist(songAlbum, songTitle, songSize) {
+        $.ajax({
+            type: "POST",
+            url: "adres_serwera",
+            data: { action: "ADD", album: songAlbum, title: songTitle, size: songSize },
+            success: function (response) {
+                console.log(response)
+            },
+            error: function (err) {
+                console.log(err)
             }
         });
     }

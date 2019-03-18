@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/progBar.css">
     <script src="../libs/jquery331.js"></script>
     <script src="../js/Net.js"></script>
     <script src="../js/UI.js"></script>
@@ -19,19 +20,31 @@
 
         <div id="covers"></div>
         <div id="content">
-            <h1 id="title">RED Player</h1>
+            <div id="justBlack">
+                <h1 id="title">RED Player</h1>
+            </div>
             <table id="songs"></table>
         </div>
         <div id="footer">
-            <audio id="audio">
+            <audio id="audio" controls preload="auto">
                 <source src="" id="audio_src" type="audio/mp3" />
             </audio>
             <div id="controls">
-                <img class="buttons" src="../img/prev.png" alt="1" width="96" height="96" id="prev">
-                <img class="buttons" src="../img/play.png" alt="2" width="86" height="86" id="play">
-                <img class="buttons" src="../img/next.png" alt="3" width="96" height="96" id="next">
-                <p id="time"></p>
+                <img class="buttons" src="../img/prev.png" alt="1" width="76" height="76" id="prev">
+                <img class="buttons" src="../img/play.png" alt="2" width="60" height="60" id="play">
+                <img class="buttons" src="../img/next.png" alt="3" width="76" height="76" id="next">
+                <div class="container">
+                    <div id="higherProg" class="progress progress-striped">
+                        <div id="lowerProg" class="progress-bar">
+                        </div>
+                    </div>
+                </div>
+                <p id="time">0:00 || 0:00</p>
             </div>
+            <!-- <div id="container">
+                <div id="progress" style="height:24px; width:50%;"></div>
+            </div> -->
+
         </div>
     </div>
 

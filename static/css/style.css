@@ -5,17 +5,39 @@ html, body, #root{
     background: rgb(0, 0, 0);
 }
 
+html{
+    overflow-y: hidden;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
+}
+
+body{
+    font-family: serif;
+}
+/* html::-webkit-scrollbar { /* WebKit 
+    width: 0;
+    height: 0;
+} */
+
 #covers{
     -ms-overflow-style: none;  
     float: left;
     display: block;
     height: calc(100% - 120px);
-    width: calc(15% - 5px);
+    width: calc(15% - 10px);
     margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 13px;
     background: black;
     overflow-y: scroll;
     -ms-overflow-style: none;
-    scrollbar-width: none
+    scrollbar-width: none;
+    box-sizing: border-box;
+    position: sticky;
+    top:6px;
+    /* bottom:6px; */
+    border: 2px solid rgb(63, 0, 0);
+    padding:25px;
 }
 
 #covers::-webkit-scrollbar { /* WebKit */
@@ -25,11 +47,16 @@ html, body, #root{
 
 .cover:nth-child(1){
     margin-top:0;
+    /* border-top: none; */
+}
+
+.cover:nth-child(n-1){
+    margin-bottom: 25px;
 }
 
 .cover{
     margin-top: 20px;
-    border:3px solid rgb(63, 0, 0);
+    border:1px solid rgb(53, 0, 0);
     /* border-radius: 10px; */
     box-sizing: border-box;
     display: block;
@@ -49,8 +76,9 @@ html, body, #root{
 
 #controls{
     position: absolute;
-    left:18vw;
-    top: 10px;
+    width: 75vw;
+    left:25vw;
+    top: 3px;
 }
 
 .buttons{
@@ -59,34 +87,37 @@ html, body, #root{
 
 #play{
     top:5px;
-    left: 125px;
+    left: 120px;
 }
 
 #next{
-    left:240px;
+    left:220px;
 }
 
 #time{
     position: absolute;
-    left: 400px;
+    left: 30vw;
+    top: -15px;
+    font-size: 40px;
+    font-weight: bold;
 }
 
 table{
     margin-left: -2px;
-    width:calc(100% + 4px); 
-    overflow-y: scroll;
+    width:calc(100% + 0px); 
+    /* overflow-y: scroll;
     overflow-x: hidden;
-    -ms-overflow-style: none;
+    -ms-overflow-style: none; */
     /* padding: 10px; */
     /* height: 100%; */
     /* height: 100%;
     margin:0 auto; */
 }
 
-table::-webkit-scrollbar { /* WebKit */
+/* table::-webkit-scrollbar { /* WebKit 
     width: 0;
     height: 0;
-}
+} */
 
 tr{
     width: 100%;
@@ -103,16 +134,30 @@ td{
     font-size:21px;
     border: 2px solid rgb(63, 0, 0);
 }
+
+#justBlack{
+    width: calc(100% - 4px);
+    background: black;
+    height: 126px;
+    margin:0;
+    position: sticky;
+    top:0;
+    margin-bottom: -4px;
+    border-bottom: 2px solid rgb(63, 0, 0);
+}
+
 #title{
-    width: 100%;
+    width: calc(100% - 4px);
     font-size: 50px;
     padding:25px 0;
     color:white;
     background: rgb(129, 0, 0);
     text-align: center;
     margin:0;
+    margin-bottom: 2px;
     letter-spacing: 5px;
     position: sticky;
+    top:6px;
     border: 2px solid rgb(63, 0, 0);
     /* border-left:  */
 }
@@ -134,8 +179,10 @@ tr:hover > td{
     height: calc(100% - 120px);
     float: left;
     overflow-x: hidden;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* position: sticky; */
 }
 
 #content::-webkit-scrollbar { /* WebKit */
@@ -144,6 +191,7 @@ tr:hover > td{
 }
 
 #footer{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     position: relative;
     width: 100%;
     box-sizing: border-box;
