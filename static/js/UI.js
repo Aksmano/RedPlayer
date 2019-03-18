@@ -19,6 +19,9 @@ class UI {
         document.getElementById("next").onclick = (e) => { this.nextSong() }
         document.getElementById("next").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("next").onmouseout = (e) => { document.body.style.cursor = "default" }
+        document.getElementById("playlist").onclick = (e) => { console.log("here"); this.showPlaylistSongs() }
+        document.getElementById("playlist").onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        document.getElementById("playlist").onmouseout = (e) => { document.body.style.cursor = "default" }
     }
 
     createCover(cover) {
@@ -56,18 +59,19 @@ class UI {
         td.innerText = (size / 1000 / 1000).toFixed(2) + " MB"
         tr.appendChild(td)
         var td = document.createElement("td")
-        td.style.background = "rgb(93, 0, 0)"
+        td.style.background = "rgb(51, 0, 0)"
+        td.style.border = "1px solid rgb(41, 0, 0)"
         var img = document.createElement("img")
         img.src = "../img/playlist.png"
-        img.width = 32
-        img.height = 32
-        img.style.paddingRight = "32px"
-        img.style.paddingLeft = "32px"
+        img.width = 52
+        img.height = 52
+        img.style.paddingRight = "12px"
+        img.style.paddingLeft = "12px"
         td.appendChild(img)
         // td.style.position = "relative"
         td.width = 64
         td.onmouseover = () => { td.style.backgroundColor = "rgb(123, 0, 0)" }
-        td.onmouseout = () => { td.style.backgroundColor = "rgb(93, 0, 0)" }
+        td.onmouseout = () => { td.style.backgroundColor = "rgb(51, 0, 0)" }
         td.onclick = () => {
             ui.addToPlaylist(album, title, size)
         }
@@ -75,6 +79,10 @@ class UI {
         document.getElementById("songs").appendChild(tr)
         console.log("Song created");
 
+    }
+
+    showPlaylistSongs() {
+        music.showPlaylist()
     }
 
     addToPlaylist(album, title, size) {

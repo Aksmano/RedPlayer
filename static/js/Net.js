@@ -74,4 +74,21 @@ class Net {
             }
         });
     }
+
+    sendPlaylistReq() {
+        $.ajax({
+            type: "POST",
+            url: "adres_serwera",
+            data: { action: "SHOW" },
+            success: function (response) {
+                console.log(response);
+                var finish = JSON.parse(response)
+                
+                document.getElementById("songs").innerHTML = ""
+                for (var i = 0; i < finish.songs.length; i++)
+                    ui.createSong(finish.albums[i], finish.songs[i], finish.sizes[i], i, finish.songs.length)
+                console.log("New songs table created")
+            }
+        });
+    }
 }

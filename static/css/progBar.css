@@ -24,8 +24,8 @@
   
   .progress-striped .progress-bar { 	
     background-color: #FCBC51; 
-    width: 0.5%; 
-    background-color: red; 
+    width: 0%; 
+    background-color: white; 
     /* animation: progressAnimationStrike 6s; */
   }
   

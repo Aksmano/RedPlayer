@@ -191,4 +191,8 @@ class Music {
     toPlaylist(album, title, size) {
         net.sendSongToPlaylist(album, title, size)
     }
+
+    showPlaylist(){
+        net.sendPlaylistReq()
+    }
 }

@@ -108,6 +108,10 @@ const servResponse = (req, res) => {
             
             res.end(JSON.stringify(playlist, null, 4))
         }
+        else if(finish.action == "SHOW"){
+            console.log("Showing playlist")
+            res.end(JSON.stringify(playlist, null, 4))
+        }
     })
 
 }
