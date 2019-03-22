@@ -5,21 +5,21 @@ class UI {
     constructor() {
         // this.songList
         // this.album
-        // this.size
+        this.isPlaylist = false
         this.init()
     }
 
     init() {
-        document.getElementById("prev").onclick = (e) => { this.prevSong() }
+        document.getElementById("prev").onclick = (e) => { if (document.getElementById("prev").src != "") this.prevSong() }
         document.getElementById("prev").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("prev").onmouseout = (e) => { document.body.style.cursor = "default" }
         document.getElementById("play").onclick = (e) => { music.playSong(e.target) }
         document.getElementById("play").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("play").onmouseout = (e) => { document.body.style.cursor = "default" }
-        document.getElementById("next").onclick = (e) => { this.nextSong() }
+        document.getElementById("next").onclick = (e) => { if (document.getElementById("prev").src != "") this.nextSong() }
         document.getElementById("next").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("next").onmouseout = (e) => { document.body.style.cursor = "default" }
-        document.getElementById("playlist").onclick = (e) => { console.log("here"); this.showPlaylistSongs() }
+        document.getElementById("playlist").onclick = (e) => { this.showPlaylistSongs() }
         document.getElementById("playlist").onmouseover = (e) => { document.body.style.cursor = "pointer" }
         document.getElementById("playlist").onmouseout = (e) => { document.body.style.cursor = "default" }
     }
@@ -38,7 +38,7 @@ class UI {
         console.log("Cover created")
     }
 
-    createSong(album, title, size, i, endSize) {
+    createSong(album, title, size, i, endSize, isSet) {
         var songName = ""
         for (let i = 0; i < title.length; i++)
             if (title[i] == "." && title[i + 1] == "m" && title[i + 2] == "p" && title[i + 3] == "3") break
@@ -46,18 +46,22 @@ class UI {
         var tr = document.createElement("tr")
         tr.onmouseover = () => { document.body.style.cursor = "pointer" }
         tr.onmouseout = () => { document.body.style.cursor = "default" }
+
         var td = document.createElement("td")
-        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = album
         tr.appendChild(td)
+
         var td = document.createElement("td")
-        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = songName
         tr.appendChild(td)
+
         var td = document.createElement("td")
-        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")) }
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = (size / 1000 / 1000).toFixed(2) + " MB"
         tr.appendChild(td)
+
         var td = document.createElement("td")
         td.style.background = "rgb(51, 0, 0)"
         td.style.border = "1px solid rgb(41, 0, 0)"
@@ -76,12 +80,14 @@ class UI {
             ui.addToPlaylist(album, title, size)
         }
         tr.appendChild(td)
+
         document.getElementById("songs").appendChild(tr)
         console.log("Song created");
 
     }
 
     showPlaylistSongs() {
+        this.isPlaylist = true
         music.showPlaylist()
     }
 
@@ -90,10 +96,14 @@ class UI {
     }
 
     prevSong() {
-        music.playPrevSong("prev")
+        music.playPrevSong("prev", this.isPlaylist)
     }
 
     nextSong() {
-        music.playNextSong("next")
+        music.playNextSong("next", this.isPlaylist)
+    }
+
+    setIsPlaylist(isIt) {
+        this.isPlaylist = isIt
     }
 }

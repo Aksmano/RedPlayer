@@ -21,8 +21,10 @@ const servResponse = (req, res) => {
     // w poniższej funkcji nic nie modyfikujemy
 
     req.on("data", function (data) {
-        // console.log("data: " + data)
+        console.log("data: ",data)
         allData += data;
+        console.log(allData);
+        
     })
 
     //kiedy przyjdą już wszystkie dane
@@ -30,6 +32,7 @@ const servResponse = (req, res) => {
     //i odsyłamy do przeglądarki
 
     req.on("end", function (data) {
+        console.log("end: ",data)
         var finish = qs.parse(allData)
         console.log(finish)
         if (finish.action == "FIRST") {
@@ -71,6 +74,7 @@ const servResponse = (req, res) => {
                 if (err) {
                     return console.log(err);
                 }
+                console.log("jestes w next")
                 console.log(files)
                 files.forEach(function (fileName) {
                     console.log(fileName);
@@ -100,17 +104,31 @@ const servResponse = (req, res) => {
                 });
             })
         }
-        else if(finish.action == "ADD"){
-            playlist.albums.push(finish.album)
-            playlist.songs.push(finish.title)
-            playlist.sizes.push(finish.size)
+        else if (finish.action == "ADD") {
+            if (playlist.songs.includes(finish.title)) {
+                console.log(playlist);
+            }
+            else {
+                playlist.albums.push(finish.album)
+                playlist.songs.push(finish.title)
+                playlist.sizes.push(finish.size)
+            }
             console.log(playlist);
             
             res.end(JSON.stringify(playlist, null, 4))
         }
-        else if(finish.action == "SHOW"){
-            console.log("Showing playlist")
+        else if (finish.action == "PLAYLIST") {
+            console.log("Song from playlist")
+            console.log(playlist)
             res.end(JSON.stringify(playlist, null, 4))
+        }
+        else if (finish.action == "UPDATE") {
+            console.log("Updating playlist on server")
+            console.log(finish["albums[]"])
+            playlist.albums = finish["albums[]"]
+            playlist.songs = finish["songs[]"]
+            playlist.sizes = finish["sizes[]"]
+            res.end("You have updated the playlist")
         }
     })
 
