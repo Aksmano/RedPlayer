@@ -3,9 +3,25 @@ console.log("wczytano plik Ui.js")
 class UI {
 
     constructor() {
-        document.getElementById("prev").onclick = (e) => { music.prevSong() }
+        // this.songList
+        // this.album
+        this.isPlaylist = false
+        this.init()
+    }
+
+    init() {
+        document.getElementById("prev").onclick = (e) => { if (document.getElementById("prev").src != "") this.prevSong() }
+        document.getElementById("prev").onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        document.getElementById("prev").onmouseout = (e) => { document.body.style.cursor = "default" }
         document.getElementById("play").onclick = (e) => { music.playSong(e.target) }
-        document.getElementById("next").onclick = (e) => { music.nextSong() }
+        document.getElementById("play").onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        document.getElementById("play").onmouseout = (e) => { document.body.style.cursor = "default" }
+        document.getElementById("next").onclick = (e) => { if (document.getElementById("prev").src != "") this.nextSong() }
+        document.getElementById("next").onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        document.getElementById("next").onmouseout = (e) => { document.body.style.cursor = "default" }
+        document.getElementById("playlist").onclick = (e) => { this.showPlaylistSongs() }
+        document.getElementById("playlist").onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        document.getElementById("playlist").onmouseout = (e) => { document.body.style.cursor = "default" }
     }
 
     createCover(cover) {
@@ -16,42 +32,78 @@ class UI {
         el.addEventListener("click", () => {
             net.sendData(cover);
         })
+        el.onmouseover = (e) => { document.body.style.cursor = "pointer" }
+        el.onmouseout = (e) => { document.body.style.cursor = "default" }
         document.getElementById("covers").appendChild(el)
         console.log("Cover created")
     }
 
-    createSong(album, title, size) {
+    createSong(album, title, size, i, endSize, isSet) {
         var songName = ""
         for (let i = 0; i < title.length; i++)
             if (title[i] == "." && title[i + 1] == "m" && title[i + 2] == "p" && title[i + 3] == "3") break
             else songName += title[i]
         var tr = document.createElement("tr")
-        tr.onclick = (e) => {
-            music.playMusic(album, title, size, document.getElementById("play"))
-        }
         tr.onmouseover = () => { document.body.style.cursor = "pointer" }
         tr.onmouseout = () => { document.body.style.cursor = "default" }
+
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = album
         tr.appendChild(td)
+
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = songName
         tr.appendChild(td)
+
         var td = document.createElement("td")
+        td.onclick = (e) => { music.playMusic(album, title, size, document.getElementById("play")); this.isPlaylist = isSet }
         td.innerText = (size / 1000 / 1000).toFixed(2) + " MB"
         tr.appendChild(td)
+
         var td = document.createElement("td")
-        var arrow = document.createElement("div")
-        arrow.className = "arrow"
-        td.appendChild(arrow)
-        td.style.position = "relative"
+        td.style.background = "rgb(51, 0, 0)"
+        td.style.border = "1px solid rgb(41, 0, 0)"
+        var img = document.createElement("img")
+        img.src = "../img/playlist.png"
+        img.width = 52
+        img.height = 52
+        img.style.paddingRight = "12px"
+        img.style.paddingLeft = "12px"
+        td.appendChild(img)
+        // td.style.position = "relative"
         td.width = 64
-        td.onmouseover = () => { td.children[0].style.borderLeftColor = "rgb(233, 0, 0)" }
-        td.onmouseout = () => { td.children[0].style.borderLeftColor = "rgb(255, 255, 255)" }
+        td.onmouseover = () => { td.style.backgroundColor = "rgb(123, 0, 0)" }
+        td.onmouseout = () => { td.style.backgroundColor = "rgb(51, 0, 0)" }
+        td.onclick = () => {
+            ui.addToPlaylist(album, title, size)
+        }
         tr.appendChild(td)
+
         document.getElementById("songs").appendChild(tr)
         console.log("Song created");
 
     }
 
+    showPlaylistSongs() {
+        this.isPlaylist = true
+        music.showPlaylist()
+    }
+
+    addToPlaylist(album, title, size) {
+        music.toPlaylist(album, title, size)
+    }
+
+    prevSong() {
+        music.playPrevSong("prev", this.isPlaylist)
+    }
+
+    nextSong() {
+        music.playNextSong("next", this.isPlaylist)
+    }
+
+    setIsPlaylist(isIt) {
+        this.isPlaylist = isIt
+    }
 }
