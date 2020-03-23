@@ -218,6 +218,6 @@ var server = http.createServer((req, res) => {
     }
 })
 
-server.listen(3000, () => {
-    console.log("start serwera na porcie 3000")
+server.listen(3005, () => {
+    console.log("start serwera na porcie 3005")
 })
